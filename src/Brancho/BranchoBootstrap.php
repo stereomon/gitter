@@ -3,6 +3,7 @@
 namespace Brancho;
 
 use Brancho\Command\BranchBuilderCommand;
+use Brancho\Command\InitCommand;
 use Symfony\Component\Console\Application;
 
 class BranchoBootstrap extends Application
@@ -39,6 +40,7 @@ class BranchoBootstrap extends Application
     {
         return [
             new BranchBuilderCommand(),
+            new InitCommand(),
         ];
     }
 }

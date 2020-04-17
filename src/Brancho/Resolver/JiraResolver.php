@@ -24,9 +24,9 @@ class JiraResolver extends AbstractResolver
      * @param OutputInterface $output
      * @param ContextInterface $context
      *
-     * @return string
+     * @return string|null
      */
-    public function resolve(InputInterface $input, OutputInterface $output, ContextInterface $context): string
+    public function resolve(InputInterface $input, OutputInterface $output, ContextInterface $context): ?string
     {
         $question = new Question('Please enter the Jira Ticket number e.g. "rk-123": ');
         $helper = new QuestionHelper();
@@ -36,6 +36,14 @@ class JiraResolver extends AbstractResolver
         $filter = $context->getFilter();
 
         $jiraIssue = $this->getFactory()->createJira()->getJiraIssue($issue, $config);
+
+        if (isset($jiraIssue['errorMessages'])) {
+            foreach ($jiraIssue['errorMessages'] as $errorMessage) {
+                $output->writeln(sprintf('<fg=red>%s</>', $errorMessage));
+            }
+
+            return null;
+        }
 
         $summary = $jiraIssue['fields']['summary'];
         $issueType = $jiraIssue['fields']['issuetype']['name'];

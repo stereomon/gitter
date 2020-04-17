@@ -11,6 +11,7 @@ class Config implements ConfigInterface
     public const PATTERN = 'pattern';
     public const RESOLVERS = 'resolvers';
     public const FILTERS = 'filters';
+    public const JIRA = 'jira';
 
     /**
      * @var array
@@ -39,20 +40,43 @@ class Config implements ConfigInterface
     {
         if ($this->config === null) {
             $config = $this->configReader->read($pathToConfig);
-            $optionResolver = $this->getOptionResolver();
+            $config = $this->mergeLocalConfigurations($pathToConfig, $config);
 
-            $configurationDirectory = dirname($pathToConfig);
-            $localConfigurationPath = $configurationDirectory . '/.brancho.local';
+            $this->config = $this->getOptionResolver()->resolve($config);
+        }
 
+        return $this->config;
+    }
+
+    /**
+     * @param string $pathToConfig
+     * @param array $config
+     *
+     * @return array
+     */
+    protected function mergeLocalConfigurations(string $pathToConfig, array $config): array
+    {
+        $localConfigurationPaths = [
+            dirname($pathToConfig) . '/.brancho.local',
+            $this->getHomeDirectory() . '/brancho/.brancho.local',
+        ];
+
+        foreach ($localConfigurationPaths as $localConfigurationPath) {
             if (file_exists($localConfigurationPath)) {
                 $localConfig = $this->configReader->read($localConfigurationPath);
                 $config = array_merge($config, $localConfig);
             }
-
-            $this->config = $optionResolver->resolve($config);
         }
 
-        return $this->config;
+        return $config;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getHomeDirectory(): string
+    {
+        return (string)getenv('HOME');
     }
 
     /**
@@ -67,7 +91,7 @@ class Config implements ConfigInterface
                 '{description}' => DescriptionResolver::class,
             ],
             static::FILTERS => [],
-            'jira' => [
+            static::JIRA => [
                 'host' => '',
                 'username' => '',
                 'password' => '',

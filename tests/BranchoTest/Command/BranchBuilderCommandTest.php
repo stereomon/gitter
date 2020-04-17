@@ -68,10 +68,41 @@ class BranchBuilderCommandTest extends Unit
 
         $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
         $commandTester->setInputs(['rk-123']);
-        $commandTester->execute(['--config' => codecept_data_dir('pattern-jira-bug.yml')]);
+        $commandTester->execute(['--config' => codecept_data_dir('pattern-jira.yml')]);
 
         $this->assertStringContainsString('bugfix/rk-123/ticket-summary', $commandTester->getDisplay());
         $this->assertStringContainsString('"bugfix/rk-123/ticket-summary" created.', $commandTester->getDisplay());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCommandJiraPatternWithErrorResponse(): void
+    {
+        $jiraMock = Stub::make(Jira::class, [
+            'getJiraIssue' => function () {
+                return include codecept_data_dir('jira-error-response.php');
+            },
+        ]);
+
+        /** @var $factoryMock BranchoFactory */
+        $factoryMock = Stub::make(BranchoFactory::class, [
+            'createJira' => function () use ($jiraMock) {
+                return $jiraMock;
+            },
+        ]);
+
+        $branchBuilderCommand = new BranchBuilderCommand();
+        $branchBuilderCommand->setFactory($factoryMock);
+
+        $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
+        $commandTester->setInputs(['rk-123']);
+        $commandTester->execute(['--config' => codecept_data_dir('pattern-jira.yml')]);
+
+        $this->assertStringContainsString(
+            'Issue does not exist or you do not have permission to see it.',
+            $commandTester->getDisplay()
+        );
     }
 
     /**

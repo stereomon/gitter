@@ -2,3 +2,4 @@
 tests/_support/_generated/
 vendor/*
 .branch.local
+tests/_data/home/*

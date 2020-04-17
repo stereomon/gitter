@@ -22,15 +22,13 @@ class TypeResolver implements ResolverInterface
      * @param OutputInterface $output
      * @param ContextInterface $context
      *
-     * @return string
+     * @return string|null
      */
-    public function resolve(InputInterface $input, OutputInterface $output, ContextInterface $context): string
+    public function resolve(InputInterface $input, OutputInterface $output, ContextInterface $context): ?string
     {
         $question = new ChoiceQuestion('Please select the type to be used: ', $this->types);
         $helper = new QuestionHelper();
 
-        $answer = $helper->ask($input, $output, $question);
-
-        return $answer;
+        return $helper->ask($input, $output, $question);
     }
 }

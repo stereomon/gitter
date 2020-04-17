@@ -1,0 +1,4 @@
+jira:
+    host: jira-host.com
+    username: jira-username
+    password: jira-password

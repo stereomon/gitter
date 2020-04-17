@@ -18,7 +18,7 @@ class BranchBuilderCommand extends AbstractCommand
      */
     protected function configure(): void
     {
-        $this->setName('branch:build')
+        $this->setName('branch')
             ->setDescription('Builds valid branch names.')
             ->addOption(
                 static::CONFIG,
@@ -39,6 +39,12 @@ class BranchBuilderCommand extends AbstractCommand
     {
         $brancho = $this->getFactory()->createBrancho();
         $resolvedBranchName = $brancho->resolveBranchName($input, $output);
+
+        if (!$resolvedBranchName) {
+            $output->writeln('<fg=red>The resolved branch name is empty some thing went wrong.</>');
+
+            return static::CODE_ERROR;
+        }
 
         $question = new ConfirmationQuestion(sprintf(
             'Should I create the branch "<info>%s</>" for you in "<info>%s</>"? ',

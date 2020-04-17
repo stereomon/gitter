@@ -13,7 +13,7 @@ interface ResolverInterface
      * @param OutputInterface $output
      * @param ContextInterface $context
      *
-     * @return string
+     * @return string|null
      */
-    public function resolve(InputInterface $input, OutputInterface $output, ContextInterface $context): string;
+    public function resolve(InputInterface $input, OutputInterface $output, ContextInterface $context): ?string;
 }

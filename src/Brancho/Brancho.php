@@ -61,9 +61,7 @@ class Brancho
             $resolvedParts[$match] = $resolver->resolve($input, $output, $context);
         }
 
-        $branchName = str_replace(array_keys($resolvedParts), array_values($resolvedParts), $pattern);
-
-        return $branchName;
+        return str_replace(array_keys($resolvedParts), array_values($resolvedParts), $pattern);
     }
 
     /**
