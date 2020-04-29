@@ -39,13 +39,29 @@ class Config implements ConfigInterface
     public function load(string $pathToConfig): array
     {
         if ($this->config === null) {
-            $config = $this->configReader->read($pathToConfig);
+            $config = $this->getRootConfiguration($pathToConfig);
             $config = $this->mergeLocalConfigurations($pathToConfig, $config);
 
             $this->config = $this->getOptionResolver()->resolve($config);
         }
 
         return $this->config;
+    }
+
+    /**
+     * @param string $pathToConfig
+     *
+     * @return array
+     */
+    protected function getRootConfiguration(string $pathToConfig): array
+    {
+        $config = [];
+
+        if (file_exists($pathToConfig)) {
+            $config = $this->configReader->read($pathToConfig);
+        }
+
+        return $config;
     }
 
     /**
