@@ -1,5 +1,5 @@
 .idea/
 tests/_support/_generated/
 vendor/*
-.branch.local
+./.brancho.local
 tests/_data/home/*
