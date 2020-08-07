@@ -17,6 +17,7 @@ class TypeResolver implements ResolverInterface
         'feature',
         'bugfix',
     ];
+
     /**
      * @param InputInterface $input
      * @param OutputInterface $output

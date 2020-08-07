@@ -21,7 +21,7 @@ class InitCommand extends AbstractCommand
     protected function configure(): void
     {
         $this->setName('init')
-            ->setDescription('Initialize brancho local configuration.')
+            ->setDescription('Initialize brancho configuration.')
             ->addOption(
                 static::CONFIG,
                 static::CONFIG_SHORTCUT,
@@ -45,7 +45,7 @@ class InitCommand extends AbstractCommand
 
         if (file_exists($homeDirectoryConfigPath)) {
             $question = new ConfirmationQuestion(sprintf(
-                'I found a "%s" when you continue, this will be re-written, should I continue? [<fg=yellow>yes</>]',
+                'I found a "%s" when you continue, this will be re-written, should I continue? [<fg=yellow>yes</>] ',
                 $homeDirectoryConfigPath
             ));
 
