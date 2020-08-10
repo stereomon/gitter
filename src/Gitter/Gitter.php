@@ -7,6 +7,7 @@ use Gitter\Config\Config;
 use Gitter\Config\ConfigInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 class Gitter
@@ -43,15 +44,43 @@ class Gitter
     {
         $config = $this->loadConfig($this->getConfigPath($input));
 
-        $repositories = $config[Config::REPOSITORIES];
+        $repositoryPaths = $config[Config::REPOSITORIES];
+        $repositoryPaths = $this->resolveRepositoryPaths($repositoryPaths);
 
         $repositoriesStatus = [];
 
-        foreach ($repositories as $repositoryPath) {
+        foreach ($repositoryPaths as $repositoryPath) {
             $repositoriesStatus[] = $this->getStatusForRepository($repositoryPath);
         }
 
         return $repositoriesStatus;
+    }
+
+    /**
+     * @param array $repositoryPaths
+     *
+     * @return array
+     */
+    protected function resolveRepositoryPaths(array $repositoryPaths): array
+    {
+        $resolvedRepositoryPaths = [];
+
+        foreach ($repositoryPaths as $repositoryPath) {
+            if (strpos($repositoryPath, '*') === false) {
+                $resolvedRepositoryPaths[] = $repositoryPath;
+
+                continue;
+            }
+
+            $finder = new Finder();
+            $finder->files()->in($repositoryPath)->name('composer.json')->depth(1);
+
+            foreach ($finder as $splFileInfo) {
+                $resolvedRepositoryPaths[] = $splFileInfo->getPath();
+            }
+        }
+
+        return $resolvedRepositoryPaths;
     }
 
     /**

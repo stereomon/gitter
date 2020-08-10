@@ -3,7 +3,6 @@
 namespace Gitter;
 
 use Gitter\Command\GitStatusCommand;
-use Gitter\Command\InitCommand;
 use Symfony\Component\Console\Application;
 
 class GitterBootstrap extends Application
@@ -40,7 +39,6 @@ class GitterBootstrap extends Application
     {
         return [
             new GitStatusCommand(),
-            new InitCommand(),
         ];
     }
 }
