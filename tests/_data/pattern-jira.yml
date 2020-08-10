@@ -1,5 +1,0 @@
-pattern: "{jira}"
-resolvers:
-  jira: \Brancho\Resolver\JiraResolver
-filters:
-  - \Brancho\Filter\Slugify

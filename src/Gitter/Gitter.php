@@ -105,7 +105,7 @@ class Gitter
     protected function getStatus(string $repositoryPath, string $branchName): string
     {
         return 'Not implemented yet';
-        
+
         $process = new Process(['git', 'rev-parse', 'abbrev-ref', 'HEAD'], $repositoryPath);
         $branchName = trim($process->run());
 
@@ -120,7 +120,7 @@ class Gitter
     protected function getConfigPath(InputInterface $input): string
     {
         /** @var string $configPath */
-        $configPath = $input->getOption(GitStatusCommand::REPOSITORY);
+        $configPath = $input->getOption(GitStatusCommand::CONFIG);
 
         return $configPath;
     }

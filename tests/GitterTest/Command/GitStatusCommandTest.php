@@ -8,7 +8,7 @@ use Gitter\Jira\Jira;
 use Codeception\Stub;
 use Codeception\Test\Unit;
 
-class BranchBuilderCommandTest extends Unit
+class GitStatusCommandTest extends Unit
 {
     /**
      * @var CommandTester
@@ -20,11 +20,10 @@ class BranchBuilderCommandTest extends Unit
      */
     public function testSimplePattern(): void
     {
-        $branchBuilderCommand = new GitStatusCommand();
+        $gitStatusCommand = new GitStatusCommand();
 
-        $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
-        $commandTester->setInputs(['Branch description']);
-        $commandTester->execute(['--config' => codecept_data_dir('pattern-description.yml')]);
+        $commandTester = $this->tester->getConsoleTester($gitStatusCommand);
+        $commandTester->execute(['--config' => codecept_data_dir('repository.yml')]);
 
         $this->assertStringContainsString('branch-description', $commandTester->getDisplay());
         $this->assertStringContainsString('"branch-description" created.', $commandTester->getDisplay());
