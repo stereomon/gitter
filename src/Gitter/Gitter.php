@@ -73,7 +73,7 @@ class Gitter
             }
 
             $finder = new Finder();
-            $finder->files()->in($repositoryPath)->name('composer.json')->depth(2);
+            $finder->files()->in($repositoryPath)->name('composer.json')->depth(0);
 
             foreach ($finder as $splFileInfo) {
                 $resolvedRepositoryPaths[] = $splFileInfo->getPath();
@@ -119,8 +119,9 @@ class Gitter
      */
     protected function getBranchName(string $repositoryPath): string
     {
-        $process = new Process(['git', 'rev-parse', 'abbrev-ref', 'HEAD'], $repositoryPath);
+        $process = new Process(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], $repositoryPath);
         $process->run();
+
         $branchName = trim($process->getOutput());
 
         return $branchName;
@@ -134,12 +135,12 @@ class Gitter
      */
     protected function getStatus(string $repositoryPath, string $branchName): string
     {
-        return 'Not implemented yet';
+        $process = new Process(['git', 'status'], $repositoryPath);
+        $process->run();
 
-        $process = new Process(['git', 'rev-parse', 'abbrev-ref', 'HEAD'], $repositoryPath);
-        $branchName = trim($process->run());
+        $status = trim($process->getOutput());
 
-        return $branchName;
+        return $status;
     }
 
     /**
