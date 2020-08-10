@@ -6,6 +6,7 @@
     "require": {
         "php": ">=7.2",
         "symfony/console": "^5.0",
+        "symfony/finder": "^5.1",
         "symfony/options-resolver": "^5.0",
         "symfony/process": "^5.0",
         "symfony/yaml": "^5.0"

@@ -51,13 +51,17 @@ class GitStatusCommand extends AbstractCommand
         $gitter = $this->getFactory()->createGitter();
         $repositoriesStatus = $gitter->getRepositoriesStatus($input, $output);
 
-        $tableHelper = $this->getTableHelper();
-        $tableHelper->setHeaders(['Composer name', 'Current branch name', 'Status']);
+        $table = new Table($output);
+        $table->setHeaders(['Composer name', 'Current branch name', 'Status']);
         foreach ($repositoriesStatus as $repositoryStatus) {
-            $tableHelper->addRow([$repositoryStatus['composer-name'], $repositoryStatus['branch-name'], $repositoryStatus['status']]);
+            $table->addRow([
+                $repositoryStatus['composer-name'],
+                $repositoryStatus['branch-name'],
+                $repositoryStatus['status'],
+            ]);
         }
 
-        $tableHelper->render();
+        $table->render();
 
         return static::CODE_SUCCESS;
     }
