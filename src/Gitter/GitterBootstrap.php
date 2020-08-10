@@ -1,18 +1,18 @@
 <?php
 
-namespace Brancho;
+namespace Gitter;
 
-use Brancho\Command\BranchBuilderCommand;
-use Brancho\Command\InitCommand;
+use Gitter\Command\GitStatusCommand;
+use Gitter\Command\InitCommand;
 use Symfony\Component\Console\Application;
 
-class BranchoBootstrap extends Application
+class GitterBootstrap extends Application
 {
     /**
      * @param string $name
      * @param string $version
      */
-    public function __construct($name = 'Brancho', $version = '1')
+    public function __construct($name = 'Gitter', $version = '1')
     {
         parent::__construct($name, $version);
 
@@ -39,7 +39,7 @@ class BranchoBootstrap extends Application
     private function getCommands(): array
     {
         return [
-            new BranchBuilderCommand(),
+            new GitStatusCommand(),
             new InitCommand(),
         ];
     }

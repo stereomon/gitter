@@ -17,5 +17,5 @@ if (!defined('COMPOSER_INSTALL')) {
 
 require_once COMPOSER_INSTALL;
 
-$bootstrap = new \Brancho\BranchoBootstrap();
+$bootstrap = new \Gitter\GitterBootstrap();
 $bootstrap->run();

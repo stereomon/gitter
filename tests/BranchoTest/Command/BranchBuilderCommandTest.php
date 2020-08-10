@@ -1,10 +1,10 @@
 <?php
 
-namespace BranchoTest\BranchoTest\Command;
+namespace GitterTest\GitterTest\Command;
 
-use Brancho\BranchoFactory;
-use Brancho\Command\BranchBuilderCommand;
-use Brancho\Jira\Jira;
+use Gitter\GitterFactory;
+use Gitter\Command\GitStatusCommand;
+use Gitter\Jira\Jira;
 use Codeception\Stub;
 use Codeception\Test\Unit;
 
@@ -20,7 +20,7 @@ class BranchBuilderCommandTest extends Unit
      */
     public function testSimplePattern(): void
     {
-        $branchBuilderCommand = new BranchBuilderCommand();
+        $branchBuilderCommand = new GitStatusCommand();
 
         $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
         $commandTester->setInputs(['Branch description']);
@@ -35,7 +35,7 @@ class BranchBuilderCommandTest extends Unit
      */
     public function testCommandTypePattern(): void
     {
-        $branchBuilderCommand = new BranchBuilderCommand();
+        $branchBuilderCommand = new GitStatusCommand();
 
         $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
         $commandTester->setInputs(['feature', 'Branch description']);
@@ -56,14 +56,14 @@ class BranchBuilderCommandTest extends Unit
             },
         ]);
 
-        /** @var $factoryMock BranchoFactory */
-        $factoryMock = Stub::make(BranchoFactory::class, [
+        /** @var $factoryMock GitterFactory */
+        $factoryMock = Stub::make(GitterFactory::class, [
             'createJira' => function () use ($jiraMock) {
                 return $jiraMock;
             },
         ]);
 
-        $branchBuilderCommand = new BranchBuilderCommand();
+        $branchBuilderCommand = new GitStatusCommand();
         $branchBuilderCommand->setFactory($factoryMock);
 
         $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
@@ -85,14 +85,14 @@ class BranchBuilderCommandTest extends Unit
             },
         ]);
 
-        /** @var $factoryMock BranchoFactory */
-        $factoryMock = Stub::make(BranchoFactory::class, [
+        /** @var $factoryMock GitterFactory */
+        $factoryMock = Stub::make(GitterFactory::class, [
             'createJira' => function () use ($jiraMock) {
                 return $jiraMock;
             },
         ]);
 
-        $branchBuilderCommand = new BranchBuilderCommand();
+        $branchBuilderCommand = new GitStatusCommand();
         $branchBuilderCommand->setFactory($factoryMock);
 
         $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
@@ -110,7 +110,7 @@ class BranchBuilderCommandTest extends Unit
      */
     public function testExecuteOnlyShowsBranchName(): void
     {
-        $branchBuilderCommand = new BranchBuilderCommand();
+        $branchBuilderCommand = new GitStatusCommand();
 
         $commandTester = $this->tester->getConsoleTester($branchBuilderCommand);
         $commandTester->setInputs(['feature', 'Branch description', 'n']);

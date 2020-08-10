@@ -1,8 +1,8 @@
 <?php
 
-namespace Brancho\Command;
+namespace Gitter\Command;
 
-use Brancho\BranchoFactory;
+use Gitter\GitterFactory;
 use Symfony\Component\Console\Command\Command;
 
 class AbstractCommand extends Command
@@ -11,27 +11,27 @@ class AbstractCommand extends Command
     protected const CODE_ERROR = 1;
 
     /**
-     * @var BranchoFactory|null
+     * @var GitterFactory|null
      */
     protected $factory;
 
     /**
-     * @param BranchoFactory $factory
+     * @param GitterFactory $factory
      *
      * @return void
      */
-    public function setFactory(BranchoFactory $factory): void
+    public function setFactory(GitterFactory $factory): void
     {
         $this->factory = $factory;
     }
 
     /**
-     * @return \Brancho\BranchoFactory
+     * @return \Gitter\GitterFactory
      */
-    protected function getFactory(): BranchoFactory
+    protected function getFactory(): GitterFactory
     {
         if ($this->factory === null) {
-            $this->factory = new BranchoFactory();
+            $this->factory = new GitterFactory();
         }
 
         return $this->factory;

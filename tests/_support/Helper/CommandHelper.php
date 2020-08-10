@@ -1,8 +1,8 @@
 <?php
 
-namespace BranchoTest\Helper;
+namespace GitterTest\Helper;
 
-use Brancho\BranchoBootstrap;
+use Gitter\GitterBootstrap;
 use Codeception\Module;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -17,7 +17,7 @@ class CommandHelper extends Module
      */
     public function getConsoleTester(Command $command): CommandTester
     {
-        $application = new BranchoBootstrap();
+        $application = new GitterBootstrap();
         $application->add($command);
 
         $command = $application->find($command->getName());

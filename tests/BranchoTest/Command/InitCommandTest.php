@@ -1,8 +1,8 @@
 <?php
 
-namespace BranchoTest\BranchoTest\Command;
+namespace GitterTest\GitterTest\Command;
 
-use Brancho\Command\InitCommand;
+use Gitter\Command\InitCommand;
 use Codeception\Stub;
 use Codeception\Test\Unit;
 
@@ -20,7 +20,7 @@ class InitCommandTest extends Unit
     {
         parent::setUp();
 
-        $branchoLocalPath = $this->getBranchoLocalPath();
+        $branchoLocalPath = $this->getGitterLocalPath();
         $branchoLocalDirectory = dirname($branchoLocalPath);
 
         if (file_exists($branchoLocalPath)) {
@@ -35,7 +35,7 @@ class InitCommandTest extends Unit
     /**
      * @return string
      */
-    protected function getBranchoLocalPath(): string
+    protected function getGitterLocalPath(): string
     {
         return codecept_data_dir('home/brancho/.brancho.local');
     }
@@ -84,14 +84,14 @@ class InitCommandTest extends Unit
     /**
      * @return void
      */
-    public function testInitWillAskToOverwriteWhenBranchoLocalExistsAndAbortIfUserStops(): void
+    public function testInitWillAskToOverwriteWhenGitterLocalExistsAndAbortIfUserStops(): void
     {
         /** @var InitCommand $initCommand */
         $initCommand = Stub::construct(InitCommand::class, [], [
             'getHomeDirectory' => codecept_data_dir('home'),
         ]);
 
-        $this->createBranchoLocalFile();
+        $this->createGitterLocalFile();
 
         $commandTester = $this->tester->getConsoleTester($initCommand);
         $commandTester->setInputs(['n']);
@@ -103,14 +103,14 @@ class InitCommandTest extends Unit
     /**
      * @return void
      */
-    public function testInitWillAskToOverwriteWhenBranchoLocalExists(): void
+    public function testInitWillAskToOverwriteWhenGitterLocalExists(): void
     {
         /** @var InitCommand $initCommand */
         $initCommand = Stub::construct(InitCommand::class, [], [
             'getHomeDirectory' => codecept_data_dir('home'),
         ]);
 
-        $this->createBranchoLocalFile();
+        $this->createGitterLocalFile();
 
         $commandTester = $this->tester->getConsoleTester($initCommand);
         $commandTester->setInputs(['y', 'jira-host.com', 'jira-username', 'jira-password']);
@@ -122,12 +122,12 @@ class InitCommandTest extends Unit
     /**
      * @return void
      */
-    protected function createBranchoLocalFile(): void
+    protected function createGitterLocalFile(): void
     {
-        if (!is_dir(dirname($this->getBranchoLocalPath()))) {
-            mkdir(dirname($this->getBranchoLocalPath()), 0777, true);
+        if (!is_dir(dirname($this->getGitterLocalPath()))) {
+            mkdir(dirname($this->getGitterLocalPath()), 0777, true);
         }
 
-        file_put_contents($this->getBranchoLocalPath(), '');
+        file_put_contents($this->getGitterLocalPath(), '');
     }
 }

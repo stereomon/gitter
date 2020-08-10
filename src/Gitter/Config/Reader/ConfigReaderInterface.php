@@ -1,6 +1,6 @@
 <?php
 
-namespace Brancho\Config\Reader;
+namespace Gitter\Config\Reader;
 
 interface ConfigReaderInterface
 {

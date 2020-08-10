@@ -1,14 +1,10 @@
 {
-    "name": "brancho/brancho",
+    "name": "gitter/gitter",
     "type": "library",
-    "description": "Builds nice branch names.",
+    "description": "Helps with git repositories.",
     "license": "proprietary",
     "require": {
         "php": ">=7.2",
-        "chobie/jira-api-restclient": "^2.0@dev",
-        "cocur/slugify": "^4.0",
-        "laminas/laminas-filter": "^2.9",
-        "symfony-cmf/slugifier-api": "^2.0",
         "symfony/console": "^5.0",
         "symfony/options-resolver": "^5.0",
         "symfony/process": "^5.0",
@@ -26,17 +22,17 @@
     },
     "autoload": {
         "psr-4": {
-            "Brancho\\": "src/Brancho/"
+            "Gitter\\": "src/Gitter/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "BranchoTest\\": "tests/",
-            "BranchoTest\\Helper\\": "tests/_support/Helper/"
+            "GitterTest\\": "tests/",
+            "GitterTest\\Helper\\": "tests/_support/Helper/"
         }
     },
     "bin": [
-        "bin/brancho"
+        "bin/gitter"
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,

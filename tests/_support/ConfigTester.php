@@ -1,5 +1,5 @@
 <?php
-namespace BranchoTest;
+namespace GitterTest;
 
 /**
  * Inherited Methods

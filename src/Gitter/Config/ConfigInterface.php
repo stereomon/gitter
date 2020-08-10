@@ -1,6 +1,6 @@
 <?php
 
-namespace Brancho\Config;
+namespace Gitter\Config;
 
 interface ConfigInterface
 {

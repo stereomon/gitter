@@ -1,8 +1,8 @@
 <?php
 
-namespace Brancho\Command;
+namespace Gitter\Command;
 
-use Brancho\Config\Config;
+use Gitter\Config\Config;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -51,7 +51,7 @@ class InitCommand extends AbstractCommand
 
             $shouldContinue = $questionHelper->ask($input, $output, $question);
             if ($shouldContinue) {
-                $this->configureBrancho($input, $output, $homeDirectoryConfigPath);
+                $this->configureGitter($input, $output, $homeDirectoryConfigPath);
 
                 return static::CODE_SUCCESS;
             }
@@ -61,7 +61,7 @@ class InitCommand extends AbstractCommand
             return static::CODE_SUCCESS;
         }
 
-        $this->configureBrancho($input, $output, $homeDirectoryConfigPath);
+        $this->configureGitter($input, $output, $homeDirectoryConfigPath);
 
         return static::CODE_SUCCESS;
     }
@@ -83,7 +83,7 @@ class InitCommand extends AbstractCommand
      *
      * @return void
      */
-    protected function configureBrancho(InputInterface $input, OutputInterface $output, string $pathToLocalConfig): void
+    protected function configureGitter(InputInterface $input, OutputInterface $output, string $pathToLocalConfig): void
     {
         $config = $this->loadConfig($this->getConfigPath($input));
         $resolvers = $config[Config::RESOLVERS];
@@ -118,7 +118,7 @@ class InitCommand extends AbstractCommand
     protected function getConfigPath(InputInterface $input): string
     {
         /** @var string $configPath */
-        $configPath = $input->getOption(BranchBuilderCommand::CONFIG);
+        $configPath = $input->getOption(GitStatusCommand::REPOSITORY);
 
         return $configPath;
     }

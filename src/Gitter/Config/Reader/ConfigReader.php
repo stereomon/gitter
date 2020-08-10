@@ -1,6 +1,6 @@
 <?php
 
-namespace Brancho\Config\Reader;
+namespace Gitter\Config\Reader;
 
 use Symfony\Component\Yaml\Yaml;
 
